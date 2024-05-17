@@ -39,7 +39,7 @@ class MyService(rpyc.Service):
         # if database has not yet been opened or has been modified externally
         # open it
         mtime = datetime.fromtimestamp(getmtime(filename))
-        if not filename in self.databases.keys() or mtime > self.opentimes[filename]:
+        if not filename in self.databases.keys() or mtime != self.opentimes[filename]:
             kp = PyKeePass(filename, password, keyfile)
             self.databases[filename] = kp
             self.opentimes[filename] = datetime.now()
